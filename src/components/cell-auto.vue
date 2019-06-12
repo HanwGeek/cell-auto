@@ -146,57 +146,58 @@ export default {
         for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
           this.nextCellData[rowIndex] = new Array();
           for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
-            var num = 0;
+            var numOfLiveCellAround = 0;
             if (rowIndex != 0 && colIndex != 0) {
               if (this.currCellData[rowIndex - 1][colIndex - 1]) {
-                num++;}
+                  numOfLiveCellAround++;
+              }
             }
             if (rowIndex != 0) {
               if (this.currCellData[rowIndex - 1][colIndex]) {
-                num++;
+                  numOfLiveCellAround++;
               }
             }
             if (rowIndex != 0 && colIndex != this.colCount - 1) {
               if (this.currCellData[rowIndex - 1][colIndex + 1]) {
-                num++;
+                  numOfLiveCellAround++;
               }
             }
             if (colIndex != 0) {
               if (this.currCellData[rowIndex][colIndex - 1]) {
-                num++;
+                  numOfLiveCellAround++;
               }
             }
             if (colIndex != this.colCount - 1) {
               if (this.currCellData[rowIndex][colIndex + 1]) {
-                num++;
+                  numOfLiveCellAround++;
               }
             }
             if (rowIndex != this.rowCount - 1 && colIndex != 0) {
               if (this.currCellData[rowIndex + 1][colIndex - 1]) {
-                num++;
+                  numOfLiveCellAround++;
               }
             }
             if (rowIndex != this.rowCount - 1) {
               if (this.currCellData[rowIndex + 1][colIndex]) {
-                num++;
+                  numOfLiveCellAround++;
               }
             }
             if (rowIndex != this.rowCount - 1 && colIndex != this.colCount - 1) {
               if (this.currCellData[rowIndex + 1][colIndex + 1]) {
-                num++;
+                  numOfLiveCellAround++;
               }
             }
-            this.judgeCurrentCellIsAlive(num, rowIndex, colIndex);
+            this.judgeCurrentCellIsAlive(numOfLiveCellAround, rowIndex, colIndex);
           }
         }
         this.currCellData = this.nextCellData;
         this.nextCellData = null;
     },
-    judgeCurrentCellIsAlive(num, rowIndex, colIndex) {
-        if (num === 3) {
+    judgeCurrentCellIsAlive(numOfLiveCellAround, rowIndex, colIndex) {
+        if (numOfLiveCellAround === 3) {
           this.nextCellData[rowIndex][colIndex] = 1;
         }
-        else if (num === 2) {
+        else if (numOfLiveCellAround === 2) {
           this.nextCellData[rowIndex][colIndex] = 
             this.currCellData[rowIndex][colIndex];
         }
