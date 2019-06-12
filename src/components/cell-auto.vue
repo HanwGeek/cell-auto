@@ -23,6 +23,8 @@
       round>
         Stop
       </el-button>
+      <el-color-picker v-model="lifeColor" show-alpha></el-color-picker>
+      <el-slider v-model="speed" max="3000" step="100"></el-slider>
     </el-row>
   </div>
 </template>
@@ -47,6 +49,9 @@ export default {
       running: false,
       speed: 1000,
     }
+  },
+  watch: {
+    lifeColor: function() {this.drawGrid()}
   },
   mounted () {
     // Init canvas and grids
