@@ -28,8 +28,8 @@ export default {
       colCount: null,
       currCellData: null,
       nextCellData: null,
-      curX: null,
-      curY: null,
+      cellRowIndex: null,
+      cellColIndex: null,
     }
   },
   mounted () {
@@ -42,30 +42,54 @@ export default {
     // Calc grid number
     this.rowCount = Math.floor(this.cvs.height / this.cellSize);
     this.colCount = Math.floor(this.cvs.width / this.cellSize);
+
+    // Init cell data
+    this.currCellData = new Array();
+    this.nextCellData = new Array();
+
+    for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
+      this.currCellData[rowIndex] = new Array();
+      for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
+        this.currCellData[rowIndex][colIndex] = 0;
+      }
+    }
+
     this.drawGrid();
   },
   methods: {
-    drawGrid() {
-      this.cxt.fillStyle = this.emptyColor;
+    drawGrid() {  
       for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
         for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
-          this.cxt.fillRect(
-            colIndex * this.cellSize + 1,
-            rowIndex * this.cellSize + 1,
-            this.cellSize - 1,
-            this.cellSize - 1
-            );
+          this.cxt.fillStyle = 
+            this.currCellData[rowIndex][colIndex] ? this.lifeColor : this.emptyColor;
+            this.cxt.fillRect(
+              colIndex * this.cellSize + 1,
+              rowIndex * this.cellSize + 1,
+              this.cellSize - 1,
+              this.cellSize - 1
+              );
         }
       }
       this.cxt.stroke();
     },
     updateMousePos(e) {
-      this.curX = e.offsetX;
-      this.curY = e.offsetY;
+      this.cellRowIndex = Math.floor(e.offsetY / this.cellSize);
+      this.cellColIndex = Math.floor(e.offsetX / this.cellSize);
     },
     changeCellState(e) {
-      var cellColIndex = Math.floor(this.curX / this.cellSize);
-      var cellRowIndex = Math.floor(this.curY / this.cellSize);
+      this.currCellData[this.cellRowIndex][this.cellColIndex] = 
+        !this.currCellData[this.cellRowIndex][this.cellColIndex];
+      this.renderSingleCell();
+    },
+    renderSingleCell() {
+      this.cxt.fillStyle = 
+        this.currCellData[this.cellRowIndex][this.cellColIndex] ? this.lifeColor : this.emptyColor;
+      this.cxt.fillRect(
+        this.cellColIndex * this.cellSize + 1,
+        this.cellRowIndex * this.cellSize + 1,
+        this.cellSize - 1,
+        this.cellSize - 1
+        );
     },
     judgeNum(){
         var num = 0;
@@ -75,11 +99,11 @@ export default {
                     if (currentData[x-1][y-1] === 1) num++;
                 if (x != 0)
                     if (currentData[x-1][y] === 1) num++;
-                if (x != 0 && y != clo-1)
+                if (x != 0 && y != col-1)
                     if (currentData[x-1][y+1] === 1) num++;
                 if (y != 0)
                     if (currentData[x][y-1] === 1) num++;
-                if (y != clo-1)
+                if (y != col-1)
                     if (currentData[x][y+1] === 1) num++;
                 if (x != row-1 && y != 0)
                     if (currentData[x+1][y-1] === 1) num++;
