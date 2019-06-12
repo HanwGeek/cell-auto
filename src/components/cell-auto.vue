@@ -121,19 +121,15 @@ export default {
               if (this.currCellData[rowIndex + 1][colIndex]) num++;
             if (rowIndex != this.rowCount - 1 && colIndex != this.colCount - 1)
               if (this.currCellData[rowIndex + 1][colIndex + 1]) num++;
-
-            if (num == 3) this.nextCellData[rowIndex][colIndex] = 1;
-            if (num == 2) this.nextCellData[rowIndex][colIndex] = 
-                            this.currCellData[rowIndex][colIndex];
-            else this.nextCellData[rowIndex][colIndex] = 0;                            
+            judgeAlive();
           }
         }
-        // judgeAlive();
+
     },
     judgeAlive() {
-        if (num === 3) nextData[x][y] = 1;
-        if (num === 2) nextData[x][y] = currentData[x][y];
-        else nextData[x][y] = 0;
+        if (num === 3) this.nextCellData[rowIndex][colIndex] = 1;
+        if (num === 2) this.nextCellData[rowIndex][colIndex] = this.currCellData[rowIndex][colIndex];
+        else this.nextCellData[rowIndex][colIndex] = 0;
     },
   }
 }
