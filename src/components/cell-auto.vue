@@ -11,6 +11,7 @@
       </el-card>
     </el-row>
     <el-row>
+      <el-col>
       <el-button 
       type="primary" 
       @click="run"
@@ -23,8 +24,13 @@
       round>
         Stop
       </el-button>
+      </el-col>
+      <el-col>
       <el-color-picker v-model="lifeColor" show-alpha></el-color-picker>
+      </el-col>
+      <el-col>
       <el-slider v-model="speed" max="3000" step="100"></el-slider>
+      </el-col>
     </el-row>
   </div>
 </template>
