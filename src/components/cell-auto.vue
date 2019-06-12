@@ -38,6 +38,8 @@ export default {
       nextCellData: null,
       cellRowIndex: null,
       cellColIndex: null,
+      running: false,
+      speed: 1000,
     }
   },
   mounted () {
@@ -103,7 +105,7 @@ export default {
         var num = 0;
         this.nextCellData = new Array();
         for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
-          this.nextCellData[i] = new Array();
+          this.nextCellData[rowIndex] = new Array();
           for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
             if (rowIndex != 0 && colIndex != 0)
               if (this.currCellData[rowIndex - 1][colIndex - 1]) num++;
@@ -121,16 +123,28 @@ export default {
               if (this.currCellData[rowIndex + 1][colIndex]) num++;
             if (rowIndex != this.rowCount - 1 && colIndex != this.colCount - 1)
               if (this.currCellData[rowIndex + 1][colIndex + 1]) num++;
-            judgeAlive();
+            this.judgeAlive(num,rowIndex, colIndex);
           }
         }
-
+        this.currCellData = this.nextCellData;
+        this.nextCellData = null;
     },
-    judgeAlive() {
+    judgeAlive(num,rowIndex, colIndex) {
         if (num === 3) this.nextCellData[rowIndex][colIndex] = 1;
         if (num === 2) this.nextCellData[rowIndex][colIndex] = this.currCellData[rowIndex][colIndex];
         else this.nextCellData[rowIndex][colIndex] = 0;
     },
+    run() {
+      this.running = true;
+      this.timer();
+    },
+    timer() {
+      if(this.running) {
+        this.judgeNum();
+        this.drawGrid();
+        setTimeout(this.timer, this.speed);
+      }
+    }
   }
 }
 </script>
