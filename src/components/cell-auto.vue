@@ -102,11 +102,11 @@ export default {
         );
     },
     judgeNum(){
-        var num = 0;
         this.nextCellData = new Array();
         for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
           this.nextCellData[rowIndex] = new Array();
           for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
+            var num = 0;
             if (rowIndex != 0 && colIndex != 0)
               if (this.currCellData[rowIndex - 1][colIndex - 1]) num++;
             if (rowIndex != 0)
@@ -123,16 +123,25 @@ export default {
               if (this.currCellData[rowIndex + 1][colIndex]) num++;
             if (rowIndex != this.rowCount - 1 && colIndex != this.colCount - 1)
               if (this.currCellData[rowIndex + 1][colIndex + 1]) num++;
-            this.judgeAlive(num,rowIndex, colIndex);
+
+            this.judgeAlive(num, rowIndex, colIndex);
           }
         }
+
         this.currCellData = this.nextCellData;
         this.nextCellData = null;
     },
-    judgeAlive(num,rowIndex, colIndex) {
-        if (num === 3) this.nextCellData[rowIndex][colIndex] = 1;
-        if (num === 2) this.nextCellData[rowIndex][colIndex] = this.currCellData[rowIndex][colIndex];
-        else this.nextCellData[rowIndex][colIndex] = 0;
+    judgeAlive(num, rowIndex, colIndex) {
+        if (num === 3) {
+          this.nextCellData[rowIndex][colIndex] = 1;
+        }
+        else if (num === 2) {
+          this.nextCellData[rowIndex][colIndex] = 
+            this.currCellData[rowIndex][colIndex];
+        }
+        else {
+          this.nextCellData[rowIndex][colIndex] = 0;
+        }
     },
     run() {
       this.running = true;
