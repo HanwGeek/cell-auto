@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    Hello
+    <center>
     <CellAuto />
+    </center>
   </div>
 </template>
 
