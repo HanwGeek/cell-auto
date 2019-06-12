@@ -17,6 +17,12 @@
       round>
         Run
       </el-button>
+      <el-button 
+      type="primary" 
+      @click="stop"
+      round>
+        Stop
+      </el-button>
     </el-row>
   </div>
 </template>
@@ -146,6 +152,9 @@ export default {
     run() {
       this.running = true;
       this.timer();
+    },
+    stop() {
+      this.running = false;
     },
     timer() {
       if(this.running) {
