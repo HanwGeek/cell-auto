@@ -122,6 +122,9 @@ export default {
     updateMousePos(e) {
       this.cellRowIndex = Math.floor(e.offsetY / this.cellSize);
       this.cellColIndex = Math.floor(e.offsetX / this.cellSize);
+      if (e.ctrlKey) {
+        this.changeCellState();
+      }
     },
     changeCellState(e) {
       this.currCellData[this.cellRowIndex][this.cellColIndex] = 
