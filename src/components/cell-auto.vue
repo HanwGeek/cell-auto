@@ -1,28 +1,28 @@
 <template>
   <div id="cell-auto">
     <el-row>
-      <el-card style="width: 800px;height: 500px">
-        <canvas 
-          id="cvs" 
-          ref="cvs"
-          @mousemove="updateMousePos"
-          @mousedown="changeCellState">
-        </canvas>
-      </el-card>
-    </el-row>
-    <el-row>
       <el-col>
-      <el-button 
-      type="primary" 
-      @click="run"
-      round>
+      <el-select v-model="randVal" placeholder="请选择随机类型">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <el-button type="primary" @click="randInit" round>
+        rand Init
+      </el-button>
+      </el-col>
+      <el-col>
+      <el-button type="primary" @click="run" round>
         Run
       </el-button>
-      <el-button 
-      type="primary" 
-      @click="stop"
-      round>
+      <el-button type="primary" @click="stop" round>
         Stop
+      </el-button>
+      <el-button type="primary" @click="clear" round>
+        Clear
       </el-button>
       </el-col>
       <el-col>
@@ -31,6 +31,16 @@
       <el-col>
       <el-slider v-model="speed" max="3000" step="100"></el-slider>
       </el-col>
+    </el-row>
+    <el-row>
+      <el-card style="width: 800px;height: 500px">
+        <canvas 
+          id="cvs" 
+          ref="cvs"
+          @mousemove="updateMousePos"
+          @mousedown="changeCellState">
+        </canvas>
+      </el-card>
     </el-row>
   </div>
 </template>
@@ -43,6 +53,7 @@ export default {
       cvs: null,
       cxt: null,
       cells: null,
+      randVal: 0.3,
       lifeColor: "red",
       emptyColor: "#CCC",
       cellSize: 16,
@@ -54,6 +65,16 @@ export default {
       cellColIndex: null,
       running: false,
       speed: 1000,
+      options: [{
+        value: 0.3,
+        label: "大量随机"
+      }, {
+        value: 0.6,
+        label: "中等随机"
+      }, {
+        value: 0.9,
+        label: "少量随机"
+      }]
     }
   },
   watch: {
@@ -180,6 +201,27 @@ export default {
         else {
           this.nextCellData[rowIndex][colIndex] = 0;
         }
+    },
+    randInit() {
+      for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
+        for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
+          if (Math.random() > this.randVal) {
+            console.log("GG");
+            this.currCellData[rowIndex][colIndex]  = 1;
+          } else {
+            this.currCellData[rowIndex][colIndex] = 0;
+          }
+        }
+      }
+      this.drawGrid();
+    },
+    clear() {
+      for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
+        for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
+          this.currCellData[rowIndex][colIndex] = 0;
+        }
+      }
+      this.drawGrid();
     },
     run() {
       this.running = true;
