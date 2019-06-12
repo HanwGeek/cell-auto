@@ -1,8 +1,8 @@
 <template>
   <div id="cell-auto">
-    <el-row>
-      <el-col>
-      <el-select v-model="randVal" placeholder="请选择随机类型">
+    <el-row :gutter="20">
+      <el-col :offset="1" :span="6">
+        <el-select v-model="randVal" placeholder="请选择随机类型">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -12,10 +12,8 @@
       </el-select>
       <el-button type="primary" @click="randInit" round>
         rand Init
-      </el-button>
-      </el-col>
-      <el-col>
-      <el-button type="primary" @click="run" round>
+      </el-button></el-col>
+      <el-col :span="6"><el-button type="primary" @click="run" round>
         Run
       </el-button>
       <el-button type="primary" @click="stop" round>
@@ -23,17 +21,12 @@
       </el-button>
       <el-button type="primary" @click="clear" round>
         Clear
-      </el-button>
-      </el-col>
-      <el-col>
-      <el-color-picker v-model="lifeColor" show-alpha></el-color-picker>
-      </el-col>
-      <el-col>
-      <el-slider v-model="speed" max="3000" step="100"></el-slider>
-      </el-col>
+      </el-button></el-col>
+      <el-col :span="6"><el-slider v-model="speed" max="3000" step="100"></el-slider></el-col>
+      <el-col :span="3"><el-color-picker v-model="lifeColor" show-alpha></el-color-picker></el-col>
     </el-row>
     <el-row>
-      <el-card style="width: 800px;height: 500px">
+      <el-card ref="card">
         <canvas 
           id="cvs" 
           ref="cvs"
@@ -50,6 +43,8 @@ export default {
   name: 'CellAuto',
   data () {
     return {
+      clientHeight: null,
+      clientWidth: null,
       cvs: null,
       cxt: null,
       cells: null,
@@ -82,6 +77,10 @@ export default {
   },
   mounted () {
     // Init canvas and grids
+    this.clientHeight = `${document.documentElement.clientHeight}`;
+    this.clientWidth = `${document.documentElement.clientWidth}`;
+    this.$refs.card.$el.style.height = this.clientHeight - 180 + 'px';
+    this.$refs.card.$el.style.width = this.clientWidth - 300 + 'px';
     this.cvs = this.$refs.cvs;
     this.cvs.width = 700;
     this.cvs.height = 400;
