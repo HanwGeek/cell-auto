@@ -111,9 +111,10 @@ export default {
                     if (currentData[x+1][y] === 1) num++;
                 if (x != row-1 && y != col-1)
                     if (currentData[x+1][y+1] === 1) num++;
+                judgeAlive();
             }
         }
-        judgeAlive();
+
     },
     judgeAlive() {
         if (num === 3) nextData[x][y] = 1;
