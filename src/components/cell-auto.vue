@@ -10,6 +10,14 @@
         </canvas>
       </el-card>
     </el-row>
+    <el-row>
+      <el-button 
+      type="primary" 
+      @click="run"
+      round>
+        Run
+      </el-button>
+    </el-row>
   </div>
 </template>
 
@@ -93,27 +101,34 @@ export default {
     },
     judgeNum(){
         var num = 0;
-        for (var x = 0; x < this.row; x++) {
-            for (var y = 0; y < this.col; y++) {
-                if (x != 0 && y != 0)
-                    if (currentData[x-1][y-1] === 1) num++;
-                if (x != 0)
-                    if (currentData[x-1][y] === 1) num++;
-                if (x != 0 && y != col-1)
-                    if (currentData[x-1][y+1] === 1) num++;
-                if (y != 0)
-                    if (currentData[x][y-1] === 1) num++;
-                if (y != col-1)
-                    if (currentData[x][y+1] === 1) num++;
-                if (x != row-1 && y != 0)
-                    if (currentData[x+1][y-1] === 1) num++;
-                if (x != row-1)
-                    if (currentData[x+1][y] === 1) num++;
-                if (x != row-1 && y != col-1)
-                    if (currentData[x+1][y+1] === 1) num++;
-            }
+        this.nextCellData = new Array();
+        for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
+          this.nextCellData[i] = new Array();
+          for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
+            if (rowIndex != 0 && colIndex != 0)
+              if (this.currCellData[rowIndex - 1][colIndex - 1]) num++;
+            if (rowIndex != 0)
+              if (this.currCellData[rowIndex - 1][colIndex]) num++;
+            if (rowIndex != 0 && colIndex != this.colCount - 1)
+              if (this.currCellData[rowIndex - 1][colIndex + 1]) num++;
+            if (colIndex != 0)
+              if (this.currCellData[rowIndex][colIndex - 1]) num++;
+            if (colIndex != this.colCount - 1)
+              if (this.currCellData[rowIndex][colIndex + 1]) num++;
+            if (rowIndex != this.rowCount - 1 && colIndex != 0)
+              if (this.currCellData[rowIndex + 1][colIndex - 1]) num++;
+            if (rowIndex != this.rowCount - 1)
+              if (this.currCellData[rowIndex + 1][colIndex]) num++;
+            if (rowIndex != this.rowCount - 1 && colIndex != this.colCount - 1)
+              if (this.currCellData[rowIndex + 1][colIndex + 1]) num++;
+
+            if (num == 3) this.nextCellData[rowIndex][colIndex] = 1;
+            if (num == 2) this.nextCellData[rowIndex][colIndex] = 
+                            this.currCellData[rowIndex][colIndex];
+            else this.nextCellData[rowIndex][colIndex] = 0;                            
+          }
         }
-        judgeAlive();
+        // judgeAlive();
     },
     judgeAlive() {
         if (num === 3) nextData[x][y] = 1;
