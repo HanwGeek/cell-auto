@@ -25,15 +25,19 @@
           rand Init
         </el-button>
       </el-col>
-      <el-col :span="6"><el-button type="primary" @click="run" :loading="running" round>
-        Run
-      </el-button>
-      <el-button type="primary" @click="stop" round>
-        Stop
-      </el-button>
-      <el-button type="primary" @click="clear" round>
-        Clear
-      </el-button></el-col>
+      <el-col :span="6">
+        <el-badge :value="iterCount" :max="999" class="item" :hidden="!running">
+        <el-button type="primary" @click="run" :loading="running" round>
+          Run
+        </el-button>
+        </el-badge>
+        <el-button type="primary" @click="stop" round>
+          Stop
+        </el-button>
+        <el-button type="primary" @click="clear" round>
+          Clear
+        </el-button>
+        </el-col>
       <el-col :span="4"><el-slider v-model="speed" :max="3000" :step="100"></el-slider></el-col>
       <el-col :span="2"><el-color-picker v-model="lifeColor" show-alpha></el-color-picker></el-col>
     </el-row>
@@ -64,6 +68,7 @@ export default {
       lifeColor: "red",
       emptyColor: "#CCC",
       cellSize: 16,
+      iterCount: 0,
       rowCount: null,
       colCount: null,
       currCellData: null,
@@ -259,9 +264,11 @@ export default {
     },
     stop() {
       this.running = false;
+      this.iterCount = 0;
     },
     timer() {
       if(this.running) {
+        this.iterCount += 1;
         this.judgeNumOfLiveCellAround();
         this.drawGrid();
         setTimeout(this.timer, this.speed);
