@@ -118,7 +118,7 @@ export default {
         this.cellSize - 1
         );
     },
-    judgeNum(){
+    judgeNumOfLiveCellAround(){
         this.nextCellData = new Array();
         for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
           this.nextCellData[rowIndex] = new Array();
@@ -190,7 +190,7 @@ export default {
     },
     timer() {
       if(this.running) {
-        this.judgeNum();
+        this.judgeNumOfLiveCellAround();
         this.drawGrid();
         setTimeout(this.timer, this.speed);
       }
