@@ -1,11 +1,15 @@
 <template>
   <div id="cell-auto">
-    <!-- <el-row> -->
-      <!-- <el-card style="width: 800px;height: 500px"> -->
-        <canvas id="cvs" ref="cvs">
+    <el-row>
+      <el-card style="width: 800px;height: 500px">
+        <canvas 
+          id="cvs" 
+          ref="cvs"
+          @mousemove="updateMousePos"
+          @mousedown="changeCellState">
         </canvas>
-      <!-- </el-card> -->
-    <!-- </el-row> -->
+      </el-card>
+    </el-row>
   </div>
 </template>
 
@@ -17,11 +21,15 @@ export default {
       cvs: null,
       cxt: null,
       cells: null,
-      lifeColor: null,
+      lifeColor: "red",
       emptyColor: "#CCC",
       cellSize: 16,
       rowCount: null,
       colCount: null,
+      currCellData: null,
+      nextCellData: null,
+      curX: null,
+      curY: null,
     }
   },
   mounted () {
@@ -38,7 +46,7 @@ export default {
   },
   methods: {
     drawGrid() {
-      this.cxt.fillStyle = "red";
+      this.cxt.fillStyle = this.emptyColor;
       for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
         for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
           this.cxt.fillRect(
@@ -50,7 +58,15 @@ export default {
         }
       }
       this.cxt.stroke();
-    }
+    },
+    updateMousePos(e) {
+      this.curX = e.offsetX;
+      this.curY = e.offsetY;
+    },
+    changeCellState(e) {
+      var cellColIndex = Math.floor(this.curX / this.cellSize);
+      var cellRowIndex = Math.floor(this.curY / this.cellSize);
+    },
   }
 }
 </script>
