@@ -25,13 +25,13 @@
           rand Init
         </el-button>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="8">
         <el-badge :value="iterCount" :max="999" class="item" :hidden="!running">
         <el-button type="primary" @click="run" :loading="running" round>
           Run
         </el-button>
         </el-badge>
-        <el-button type="primary" @click="stop" round>
+        <el-button type="primary" @click="stop" round style="margin: 0 20px">
           Stop
         </el-button>
         <el-button type="primary" @click="clear" round>
@@ -283,4 +283,8 @@ export default {
   width: 800px;
   height: 600px;
 }
+
+/* .el-button {
+  margin: 0 10px;
+} */
 </style>
