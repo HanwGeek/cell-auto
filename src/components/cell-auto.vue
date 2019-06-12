@@ -163,13 +163,13 @@ export default {
                 num++;
               }
             }
-            this.judgeAlive(num, rowIndex, colIndex);
+            this.judgeCurrentCellIsAlive(num, rowIndex, colIndex);
           }
         }
         this.currCellData = this.nextCellData;
         this.nextCellData = null;
     },
-    judgeAlive(num, rowIndex, colIndex) {
+    judgeCurrentCellIsAlive(num, rowIndex, colIndex) {
         if (num === 3) {
           this.nextCellData[rowIndex][colIndex] = 1;
         }
