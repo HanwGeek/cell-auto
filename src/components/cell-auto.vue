@@ -50,15 +50,16 @@ export default {
       for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
         for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
           this.cxt.fillRect(
-            colIndex * this.cellSize + 1, 
-            rowIndex * this.cellSize + 1, 
-            this.cellSize - 1, 
+            colIndex * this.cellSize + 1,
+            rowIndex * this.cellSize + 1,
+            this.cellSize - 1,
             this.cellSize - 1
             );
         }
       }
       this.cxt.stroke();
     },
+<<<<<<< HEAD
     updateMousePos(e) {
       this.curX = e.offsetX;
       this.curY = e.offsetY;
@@ -67,6 +68,38 @@ export default {
       var cellColIndex = Math.floor(this.curX / this.cellSize);
       var cellRowIndex = Math.floor(this.curY / this.cellSize);
     },
+=======
+    judgeNum(){
+        var num = 0;
+        for (var x = 0; x < this.row; x++) {
+            for (var y = 0; y < this.col; y++) {
+                if (x != 0 && y != 0)
+                    if (currentData[x-1][y-1] === 1) num++;
+                if (x != 0)
+                    if (currentData[x-1][y] === 1) num++;
+                if (x != 0 && y != clo-1)
+                    if (currentData[x-1][y+1] === 1) num++;
+                if (y != 0)
+                    if (currentData[x][y-1] === 1) num++;
+                if (y != clo-1)
+                    if (currentData[x][y+1] === 1) num++;
+                if (x != row-1 && y != 0)
+                    if (currentData[x+1][y-1] === 1) num++;
+                if (x != row-1)
+                    if (currentData[x+1][y] === 1) num++;
+                if (x != row-1 && y != col-1)
+                    if (currentData[x+1][y+1] === 1) num++;
+            }
+        }
+        judgeAlive();
+    },
+    judgeAlive() {
+        if (num === 3) nextData[x][y] = 1;
+        if (num === 2) nextData[x][y] = currentData[x][y];
+        else nextData[x][y] = 0;
+    },
+
+>>>>>>> 63cf13f6e58d51df1e92cc1ad547f7a44e35687e
   }
 }
 </script>
