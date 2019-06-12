@@ -1,7 +1,7 @@
 <template>
   <div id="cell-auto">
     <el-row :gutter="20">
-      <el-col :offset="1" :span="6">
+      <el-col :offset="2" :span="6">
         <el-select v-model="randVal" placeholder="请选择随机类型">
         <el-option
           v-for="item in options"
@@ -23,7 +23,7 @@
         Clear
       </el-button></el-col>
       <el-col :span="6"><el-slider v-model="speed" max="3000" step="100"></el-slider></el-col>
-      <el-col :span="3"><el-color-picker v-model="lifeColor" show-alpha></el-color-picker></el-col>
+      <el-col :span="2"><el-color-picker v-model="lifeColor" show-alpha></el-color-picker></el-col>
     </el-row>
     <el-row>
       <el-card ref="card">
@@ -82,8 +82,8 @@ export default {
     this.$refs.card.$el.style.height = this.clientHeight - 180 + 'px';
     this.$refs.card.$el.style.width = this.clientWidth - 300 + 'px';
     this.cvs = this.$refs.cvs;
-    this.cvs.width = 700;
-    this.cvs.height = 400;
+    this.cvs.height = this.clientHeight - 220;
+    this.cvs.width = this.clientWidth - 340;
     this.cxt = this.cvs.getContext("2d");
 
     // Calc grid number
