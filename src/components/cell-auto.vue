@@ -1,18 +1,30 @@
 <template>
   <div id="cell-auto">
     <el-row :gutter="20">
-      <el-col :offset="2" :span="6">
-        <el-select v-model="randVal" placeholder="请选择随机类型">
+      <el-col :offset="2" :span="7">
+        <el-select v-model="cellSize" 
+          placeholder="请选择细胞大小" 
+          @change="init"
+          style="width:100px">
+        <el-option
+          v-for="item in cellSizes"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+        </el-select>
+        <el-select v-model="randVal" placeholder="请选择随机类型" style="width:120px">
         <el-option
           v-for="item in options"
           :key="item.value"
           :label="item.label"
           :value="item.value">
         </el-option>
-      </el-select>
-      <el-button type="primary" @click="randInit" round>
-        rand Init
-      </el-button></el-col>
+        </el-select>
+        <el-button type="primary" @click="randInit" round>
+          rand Init
+        </el-button>
+      </el-col>
       <el-col :span="6"><el-button type="primary" @click="run" :loading="running" round>
         Run
       </el-button>
@@ -22,7 +34,7 @@
       <el-button type="primary" @click="clear" round>
         Clear
       </el-button></el-col>
-      <el-col :span="6"><el-slider v-model="speed" max="3000" step="100"></el-slider></el-col>
+      <el-col :span="4"><el-slider v-model="speed" :max="3000" :step="100"></el-slider></el-col>
       <el-col :span="2"><el-color-picker v-model="lifeColor" show-alpha></el-color-picker></el-col>
     </el-row>
     <el-row>
@@ -69,6 +81,16 @@ export default {
       }, {
         value: 0.9,
         label: "少量随机"
+      }],
+      cellSizes: [{
+        value: 16,
+        label: '大'
+      }, {
+        value: 10,
+        label: '中'        
+      }, {
+        value: 5,
+        label: '小'   
       }]
     }
   },
@@ -86,24 +108,27 @@ export default {
     this.cvs.width = this.clientWidth - 340;
     this.cxt = this.cvs.getContext("2d");
 
-    // Calc grid number
-    this.rowCount = Math.floor(this.cvs.height / this.cellSize);
-    this.colCount = Math.floor(this.cvs.width / this.cellSize);
-
-    // Init cell data
-    this.currCellData = new Array();
-    this.nextCellData = new Array();
-
-    for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
-      this.currCellData[rowIndex] = new Array();
-      for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
-        this.currCellData[rowIndex][colIndex] = 0;
-      }
-    }
-
-    this.drawGrid();
+    this.init();
   },
   methods: {
+    init() {
+      this.refreshCanvas();
+      // Calc grid number
+      this.rowCount = Math.floor(this.cvs.height / this.cellSize);
+      this.colCount = Math.floor(this.cvs.width / this.cellSize);
+
+      // Init cell data
+      this.currCellData = new Array();
+      this.nextCellData = new Array();
+
+      for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
+        this.currCellData[rowIndex] = new Array();
+        for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
+          this.currCellData[rowIndex][colIndex] = 0;
+        }
+      }
+      this.drawGrid();
+    },
     drawGrid() {  
       for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
         for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
@@ -118,6 +143,9 @@ export default {
         }
       }
       this.cxt.stroke();
+    },
+    refreshCanvas() {
+      this.cxt.clearRect(0, 0, this.cvs.width, this.cvs.height);
     },
     updateMousePos(e) {
       this.cellRowIndex = Math.floor(e.offsetY / this.cellSize);
@@ -209,7 +237,6 @@ export default {
       for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
         for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
           if (Math.random() > this.randVal) {
-            console.log("GG");
             this.currCellData[rowIndex][colIndex]  = 1;
           } else {
             this.currCellData[rowIndex][colIndex] = 0;
