@@ -13,7 +13,7 @@
       <el-button type="primary" @click="randInit" round>
         rand Init
       </el-button></el-col>
-      <el-col :span="6"><el-button type="primary" @click="run" round>
+      <el-col :span="6"><el-button type="primary" @click="run" :loading="running" round>
         Run
       </el-button>
       <el-button type="primary" @click="stop" round>
