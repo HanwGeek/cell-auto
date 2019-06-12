@@ -124,27 +124,48 @@ export default {
           this.nextCellData[rowIndex] = new Array();
           for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
             var num = 0;
-            if (rowIndex != 0 && colIndex != 0)
-              if (this.currCellData[rowIndex - 1][colIndex - 1]) num++;
-            if (rowIndex != 0)
-              if (this.currCellData[rowIndex - 1][colIndex]) num++;
-            if (rowIndex != 0 && colIndex != this.colCount - 1)
-              if (this.currCellData[rowIndex - 1][colIndex + 1]) num++;
-            if (colIndex != 0)
-              if (this.currCellData[rowIndex][colIndex - 1]) num++;
-            if (colIndex != this.colCount - 1)
-              if (this.currCellData[rowIndex][colIndex + 1]) num++;
-            if (rowIndex != this.rowCount - 1 && colIndex != 0)
-              if (this.currCellData[rowIndex + 1][colIndex - 1]) num++;
-            if (rowIndex != this.rowCount - 1)
-              if (this.currCellData[rowIndex + 1][colIndex]) num++;
-            if (rowIndex != this.rowCount - 1 && colIndex != this.colCount - 1)
-              if (this.currCellData[rowIndex + 1][colIndex + 1]) num++;
-
+            if (rowIndex != 0 && colIndex != 0) {
+              if (this.currCellData[rowIndex - 1][colIndex - 1]) {
+                num++;}
+            }
+            if (rowIndex != 0) {
+              if (this.currCellData[rowIndex - 1][colIndex]) {
+                num++;
+              }
+            }
+            if (rowIndex != 0 && colIndex != this.colCount - 1) {
+              if (this.currCellData[rowIndex - 1][colIndex + 1]) {
+                num++;
+              }
+            }
+            if (colIndex != 0) {
+              if (this.currCellData[rowIndex][colIndex - 1]) {
+                num++;
+              }
+            }
+            if (colIndex != this.colCount - 1) {
+              if (this.currCellData[rowIndex][colIndex + 1]) {
+                num++;
+              }
+            }
+            if (rowIndex != this.rowCount - 1 && colIndex != 0) {
+              if (this.currCellData[rowIndex + 1][colIndex - 1]) {
+                num++;
+              }
+            }
+            if (rowIndex != this.rowCount - 1) {
+              if (this.currCellData[rowIndex + 1][colIndex]) {
+                num++;
+              }
+            }
+            if (rowIndex != this.rowCount - 1 && colIndex != this.colCount - 1) {
+              if (this.currCellData[rowIndex + 1][colIndex + 1]) {
+                num++;
+              }
+            }
             this.judgeAlive(num, rowIndex, colIndex);
           }
         }
-
         this.currCellData = this.nextCellData;
         this.nextCellData = null;
     },
