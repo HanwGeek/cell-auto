@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import global_   from  '../Global.vue';
 export default {
   name: 'CellAuto',
   data () {
@@ -84,7 +85,9 @@ export default {
       cells: null,
       randVal: 0.3,
       lifeColor: "red",
-      emptyColor: "#CCC",
+      emptyColor: global_.GRAY,
+      alive: global_.ALIVE,
+      dead: global_.DEAD,
       cellSize: 16,
       iterCount: 0,
       rowCount: null,
@@ -95,8 +98,6 @@ export default {
       cellColIndex: null,
       running: false,
       speed: 1000,
-      alive: 1,
-      dead: 0,
       options: [{
         value: 0.3,
         label: "大量随机"
@@ -272,9 +273,9 @@ export default {
       for (var rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
         for (var colIndex = 0; colIndex < this.colCount; colIndex++) {
           if (Math.random() > this.randVal) {
-            this.currCellData[rowIndex][colIndex]  = 1;
+            this.currCellData[rowIndex][colIndex]  = this.alive;
           } else {
-            this.currCellData[rowIndex][colIndex] = 0;
+            this.currCellData[rowIndex][colIndex] = this.dead;
           }
         }
       }
