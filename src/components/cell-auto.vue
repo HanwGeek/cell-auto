@@ -6,7 +6,8 @@
         <el-select v-model="cellSize" 
           placeholder="请选择细胞大小" 
           @change="init"
-          style="width:100px;margin: 0 20px;">
+          style="width:100px;margin: 0 20px;"
+          :disabled="running">
         <el-option
           v-for="item in cellSizes"
           :key="item.value"
@@ -16,7 +17,12 @@
         </el-select>
         </el-tooltip>
         <el-tooltip class="item" effect="dark" content="请选择随机类型" placement="top-start">
-        <el-select v-model="randVal" placeholder="请选择随机类型" style="width:120px">
+        <el-select 
+          v-model="randVal" 
+          placeholder="请选择随机类型" 
+          style="width:120px"
+          :disabled="running"
+          >
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -25,8 +31,8 @@
         </el-option>
         </el-select>
         </el-tooltip>
-        <el-button type="primary" @click="randInit" round>
-          rand Init
+        <el-button type="primary" @click="randInit" :disabled="running" round>
+          Rand Init
         </el-button>
       </el-col>
       <el-col :span="6">
@@ -38,7 +44,7 @@
         <el-button type="primary" @click="stop" style="margin: 0 20px;" round>
           Stop
         </el-button>
-        <el-button type="primary" @click="clear" round>
+        <el-button type="primary" @click="clear" :disabled="running" round>
           Clear
         </el-button>
         </el-col>
