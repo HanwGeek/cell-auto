@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import global_   from  '../Global.vue';
+import global_ from  '../Global.vue';
 export default {
   name: 'CellAuto',
   data () {
@@ -83,7 +83,7 @@ export default {
       cvs: null,
       cxt: null,
       cells: null,
-      randVal: 0.3,
+      randVal: 0.6,
       lifeColor: "red",
       emptyColor: global_.GRAY,
       alive: global_.ALIVE,
@@ -97,7 +97,7 @@ export default {
       cellRowIndex: null,
       cellColIndex: null,
       running: false,
-      speed: 1000,
+      speed: 500,
       options: [{
         value: 0.3,
         label: "大量随机"
