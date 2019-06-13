@@ -95,6 +95,8 @@ export default {
       cellColIndex: null,
       running: false,
       speed: 1000,
+      alive: 1,
+      dead: 0,
       options: [{
         value: 0.3,
         label: "大量随机"
@@ -256,14 +258,14 @@ export default {
 
     judgeCurrentCellIsAlive(numOfLiveCellAround, rowIndex, colIndex) {
       if (numOfLiveCellAround === 3) {
-        this.nextCellData[rowIndex][colIndex] = 1;
+        this.nextCellData[rowIndex][colIndex] = this.alive;
       }
       else if (numOfLiveCellAround === 2) {
         this.nextCellData[rowIndex][colIndex] =
         this.currCellData[rowIndex][colIndex];
       }
       else {
-        this.nextCellData[rowIndex][colIndex] = 0;
+        this.nextCellData[rowIndex][colIndex] = this.dead;
       }
     },
     randInit() {
