@@ -316,4 +316,7 @@ export default {
   width: 800px;
   height: 600px;
 }
+.el-row {
+  margin-top: 10px;
+}
 </style>
