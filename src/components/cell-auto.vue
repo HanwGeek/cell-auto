@@ -2,10 +2,11 @@
   <div id="cell-auto">
     <el-row :gutter="20">
       <el-col :offset="2" :span="7">
+        <el-tooltip class="item" effect="dark" content="请选择细胞大小" placement="top-start">
         <el-select v-model="cellSize" 
           placeholder="请选择细胞大小" 
           @change="init"
-          style="width:100px">
+          style="width:100px;margin: 0 20px;">
         <el-option
           v-for="item in cellSizes"
           :key="item.value"
@@ -13,6 +14,8 @@
           :value="item.value">
         </el-option>
         </el-select>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="请选择随机类型" placement="top-start">
         <el-select v-model="randVal" placeholder="请选择随机类型" style="width:120px">
         <el-option
           v-for="item in options"
@@ -21,6 +24,7 @@
           :value="item.value">
         </el-option>
         </el-select>
+        </el-tooltip>
         <el-button type="primary" @click="randInit" round>
           rand Init
         </el-button>
@@ -31,14 +35,14 @@
           Run
         </el-button>
         </el-badge>
-        <el-button type="primary" @click="stop" round>
+        <el-button type="primary" @click="stop" style="margin: 0 20px;" round>
           Stop
         </el-button>
         <el-button type="primary" @click="clear" round>
           Clear
         </el-button>
         </el-col>
-      <el-col :span="4"><el-slider v-model="speed" :max="3000" :step="100"></el-slider></el-col>
+      <el-col :span="4"><el-slider v-model="speed" :max="1000" :step="100"></el-slider></el-col>
       <el-col :span="2"><el-color-picker v-model="lifeColor" show-alpha></el-color-picker></el-col>
     </el-row>
     <el-row>
