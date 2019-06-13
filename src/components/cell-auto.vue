@@ -42,8 +42,16 @@
           Clear
         </el-button>
         </el-col>
-      <el-col :span="4"><el-slider v-model="speed" :max="1000" :step="100"></el-slider></el-col>
-      <el-col :span="2"><el-color-picker v-model="lifeColor" show-alpha></el-color-picker></el-col>
+      <el-col :span="4">
+        <el-tooltip class="item" effect="dark" content="设定进化速度" placement="top-start">
+        <el-slider v-model="speed" :max="1000" :step="100" :marks="slideMarks" :format-tooltip="formatTooltip"></el-slider>
+        </el-tooltip>
+      </el-col>
+      <el-col :span="2">
+        <el-tooltip class="item" effect="dark" content="设定细胞颜色" placement="top-start">
+        <el-color-picker v-model="lifeColor" show-alpha></el-color-picker>
+        </el-tooltip>
+      </el-col>
     </el-row>
     <el-row>
       <el-card ref="card">
@@ -100,7 +108,12 @@ export default {
       }, {
         value: 5,
         label: '小'   
-      }]
+      }],
+      slideMarks: {
+        0: '0',
+        500: '0.5s',
+        1000: '1s',
+      }
     }
   },
   watch: {
@@ -277,6 +290,9 @@ export default {
         this.drawGrid();
         setTimeout(this.timer, this.speed);
       }
+    },
+    formatTooltip(val) {
+      return val / 1000;
     }
   }
 }
