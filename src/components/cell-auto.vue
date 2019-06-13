@@ -42,12 +42,18 @@
           Clear
         </el-button>
         </el-col>
-      <el-col :span="4">
-        <el-tooltip class="item" effect="dark" content="设定进化速度" placement="top-start">
-        <el-slider v-model="speed" :max="1000" :step="100" :marks="slideMarks" :format-tooltip="formatTooltip"></el-slider>
+        <el-col :span="1">
+          <el-button type="text">快</el-button>
+        </el-col>
+      <el-col :span="3">
+        <el-tooltip class="item" effect="dark" content="改变进化速度" placement="top-start">
+        <el-slider v-model="speed" :max="1000" :step="100" :show-tooltip="false"></el-slider>
         </el-tooltip>
       </el-col>
-      <el-col :span="2">
+      <el-col :span="1">
+        <el-button type="text">慢</el-button>
+      </el-col>
+      <el-col :span="1">
         <el-tooltip class="item" effect="dark" content="设定细胞颜色" placement="top-start">
         <el-color-picker v-model="lifeColor" show-alpha></el-color-picker>
         </el-tooltip>
@@ -203,7 +209,6 @@ export default {
         this.currCellData = this.nextCellData;
         this.nextCellData = null;
     },
-
     findNumOfLiveCellAround(rowIndex, colIndex) {
         var numOfLiveCellAround = 0;
         if (rowIndex != 0 && colIndex != 0) {
